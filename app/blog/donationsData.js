@@ -25,5 +25,32 @@ export const donations = [
   },
 ];
 
+export const youthMentorshipPrograms = [
+  {
+    id: "ym-2026-03-10",
+    title: "Career guidance session",
+    date: "2026-03-10",
+    venue: "Community Hall",
+    focus: "Goal setting, CV basics, and interview confidence",
+    impact: "45 youths attended and received one-on-one guidance",
+  },
+  {
+    id: "ym-2026-02-02",
+    title: "Digital skills mentorship",
+    date: "2026-02-02",
+    venue: "Neighborhood ICT Lab",
+    focus: "Internet safety, productivity tools, and communication skills",
+    impact: "30 youths completed the practical mentorship activity",
+  },
+  {
+    id: "ym-2026-01-18",
+    title: "Leadership and values workshop",
+    date: "2026-01-18",
+    venue: "Youth Center",
+    focus: "Discipline, community leadership, and teamwork",
+    impact: "3 youth-led volunteer groups were formed",
+  },
+];
+
 export const donationInstructions =
   "To add a new donation: 1) Put your photo in public/donations. 2) Add a new object to this file with date, location, items, and image path.";

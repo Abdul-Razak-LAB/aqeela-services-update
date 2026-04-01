@@ -3,7 +3,11 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { donations, donationInstructions } from "./donationsData";
+import {
+  donations,
+  donationInstructions,
+  youthMentorshipPrograms,
+} from "./donationsData";
 
 const Blog = () => {
   return (
@@ -19,7 +23,7 @@ const Blog = () => {
           <p className="text-sm text-gray-500">{donationInstructions}</p>
         </section>
 
-        <section className="grid md:grid-cols-3 gap-5 mt-10">
+        <section className="grid md:grid-cols-3 gap-5 mt-12">
           {donations.map((donation) => (
             <article key={donation.id} className="border border-gray-200 rounded-xl p-5 bg-white space-y-3">
               <Image
@@ -38,6 +42,31 @@ const Blog = () => {
               <p className="text-gray-600"><span className="font-medium">Items:</span> {donation.items}</p>
             </article>
           ))}
+        </section>
+
+        <section className="mt-12">
+          <div className="max-w-3xl space-y-3">
+            <p className="text-sm uppercase tracking-[0.2em] text-blue-700">Youth Mentorship</p>
+            <h2 className="text-2xl md:text-4xl font-medium text-gray-900">Growing future leaders</h2>
+            <p className="text-gray-600 text-base md:text-lg">
+              We also mentor young people through practical sessions that build confidence, skills, and leadership.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-5 mt-6">
+            {youthMentorshipPrograms.map((program) => (
+              <article key={program.id} className="border border-blue-100 rounded-xl p-5 bg-blue-50/40 space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-xs uppercase tracking-[0.15em] text-blue-700">Mentorship</span>
+                  <span className="text-xs text-gray-500">{program.date}</span>
+                </div>
+                <h3 className="text-xl font-medium text-gray-900">{program.title}</h3>
+                <p className="text-gray-700"><span className="font-medium">Venue:</span> {program.venue}</p>
+                <p className="text-gray-700"><span className="font-medium">Focus:</span> {program.focus}</p>
+                <p className="text-gray-700"><span className="font-medium">Impact:</span> {program.impact}</p>
+              </article>
+            ))}
+          </div>
         </section>
       </main>
       <Footer />
