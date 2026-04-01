@@ -35,3 +35,49 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # chericheri-store
+
+## Neon + Resend Setup
+
+Add these variables in your `.env.local` file:
+
+```env
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/DB?sslmode=require
+RESEND_API_KEY=re_xxx
+RESEND_FROM_EMAIL="Aqeela Services <no-reply@yourdomain.com>"
+CONSULTATION_NOTIFICATION_EMAIL=support@aqeelaservices.com
+```
+
+Notes:
+
+- `DATABASE_URL` should be your Neon connection string.
+- `RESEND_FROM_EMAIL` must use a verified Resend sender/domain.
+- Consultation bookings are saved in Neon and trigger two emails:
+  - confirmation to the customer
+  - notification to `CONSULTATION_NOTIFICATION_EMAIL`
+
+Run the Neon migration once after setting env vars:
+
+```bash
+npm run db:migrate
+```
+
+## Stripe Online Payment Setup
+
+Add these variables in your `.env.local` file:
+
+```env
+STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_CURRENCY=usd
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+```
+
+Then restart your dev server.
+
+For local webhook testing, run:
+
+```bash
+stripe listen --forward-to localhost:3000/api/payments/stripe/webhook
+```
+
+Copy the printed `whsec_...` value into `STRIPE_WEBHOOK_SECRET`.

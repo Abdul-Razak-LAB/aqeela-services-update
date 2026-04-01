@@ -1,6 +1,5 @@
 import { Inngest } from "inngest";
 import connectDB from "./db";
-import User from "@/models/User";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "chericheri-store" });
@@ -13,14 +12,22 @@ export const syncUserCreation = inngest.createFunction(
     { event: 'clerk/user.created'},
     async ({event}) => {
         const { id, first_name, last_name, email_addresses, image_url } = event.data
-        const userData = {
-            _id:id,
-            email: email_addresses[0].email_address,
-            name: first_name + ' ' + last_name,
-            imageUrl:image_url
-        }
-        await connectDB()
-        await User.create(userData)
+                const sql = await connectDB()
+                await sql`
+                    INSERT INTO users (id, name, email, image_url)
+                    VALUES (
+                        ${id},
+                        ${`${first_name || ""} ${last_name || ""}`.trim() || "User"},
+                        ${email_addresses?.[0]?.email_address || ""},
+                        ${image_url || ""}
+                    )
+                    ON CONFLICT (id)
+                    DO UPDATE SET
+                        name = EXCLUDED.name,
+                        email = EXCLUDED.email,
+                        image_url = EXCLUDED.image_url,
+                        updated_at = NOW()
+                `
     })
 
     // Update user data in database
@@ -28,16 +35,25 @@ export const syncUserCreation = inngest.createFunction(
         {
             id: 'update-user-from-clerk'
         },
-        { event: 'clerk-user.updated' },
+                { event: 'clerk/user.updated' },
         async ({event}) => {
-               const userData = {
-            _id:id,
-            email: email_addresses[0].email_address,
-            name: first_name + ' ' + last_name,
-            imageUrl:image_url
-        }
-        await connectDB()
-        await User.findByIdAndDelete(id,userData)
+                const { id, first_name, last_name, email_addresses, image_url } = event.data
+                const sql = await connectDB()
+                await sql`
+                    INSERT INTO users (id, name, email, image_url)
+                    VALUES (
+                        ${id},
+                        ${`${first_name || ""} ${last_name || ""}`.trim() || "User"},
+                        ${email_addresses?.[0]?.email_address || ""},
+                        ${image_url || ""}
+                    )
+                    ON CONFLICT (id)
+                    DO UPDATE SET
+                        name = EXCLUDED.name,
+                        email = EXCLUDED.email,
+                        image_url = EXCLUDED.image_url,
+                        updated_at = NOW()
+                `
         }
     )
     
@@ -51,8 +67,8 @@ export const syncUserDeletion = inngest.createFunction(
     async ({event}) => {
         const {id } = event.data
 
-        await connectDB()
-        await User.findByIdAndDelete(id)
+        const sql = await connectDB()
+        await sql`DELETE FROM users WHERE id = ${id}`
 
     }
 )

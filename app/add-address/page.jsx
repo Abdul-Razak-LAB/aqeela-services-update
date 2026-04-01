@@ -3,9 +3,14 @@ import { assets } from "@/assets/assets";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppContext } from "@/context/AppContext";
+import toast from "react-hot-toast";
 
 const AddAddress = () => {
+
+    const { addUserAddress, router, user, authLoaded } = useAppContext();
+    const [isSaving, setIsSaving] = useState(false);
 
     const [address, setAddress] = useState({
         fullName: '',
@@ -16,8 +21,44 @@ const AddAddress = () => {
         state: '',
     })
 
+    useEffect(() => {
+        if (!authLoaded) return;
+        if (!user) {
+            toast.error("Please sign in first to add an address.");
+            router.push('/sign-in?redirect_url=/add-address');
+        }
+    }, [authLoaded, user, router]);
+
     const onSubmitHandler = async (e) => {
         e.preventDefault();
+
+        if (!authLoaded) {
+            toast.error("Please wait while we verify your sign-in.");
+            return;
+        }
+
+        if (!user) {
+            toast.error("Please sign in first to add an address.");
+            router.push('/sign-in?redirect_url=/add-address');
+            return;
+        }
+
+        const isInvalid = Object.values(address).some((field) => !field.trim());
+        if (isInvalid) {
+            toast.error("Please fill in all address fields.");
+            return;
+        }
+
+        setIsSaving(true);
+        const result = await addUserAddress(address);
+        setIsSaving(false);
+        if (!result.success) {
+            toast.error(result.message);
+            return;
+        }
+
+        toast.success("Address saved.");
+        router.push('/cart');
 
     }
 
@@ -76,8 +117,8 @@ const AddAddress = () => {
                             />
                         </div>
                     </div>
-                    <button type="submit" className="max-w-sm w-full mt-6 bg-orange-600 text-white py-3 hover:bg-orange-700 uppercase">
-                        Save address
+                    <button disabled={!authLoaded || isSaving} type="submit" className="max-w-sm w-full mt-6 bg-orange-600 text-white py-3 hover:bg-orange-700 uppercase disabled:opacity-60 disabled:cursor-not-allowed">
+                        {isSaving ? 'Saving...' : 'Save address'}
                     </button>
                 </form>
                 <Image

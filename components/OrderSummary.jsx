@@ -1,18 +1,13 @@
-import { addressDummyData } from "@/assets/assets";
 import { useAppContext } from "@/context/AppContext";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const OrderSummary = () => {
 
-  const { currency, router, getCartCount, getCartAmount } = useAppContext()
+  const { currency, router, getCartCount, getCartAmount, userAddresses, addressesLoading, placeOrder } = useAppContext()
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const [userAddresses, setUserAddresses] = useState([]);
-
-  const fetchUserAddresses = async () => {
-    setUserAddresses(addressDummyData);
-  }
+  const [paymentMethod, setPaymentMethod] = useState('COD');
 
   const handleAddressSelect = (address) => {
     setSelectedAddress(address);
@@ -20,12 +15,34 @@ const OrderSummary = () => {
   };
 
   const createOrder = async () => {
+    if (!selectedAddress && !userAddresses.length && !addressesLoading) {
+      toast.error("Please add a shipping address first.");
+      router.push('/add-address');
+      return;
+    }
+
+    const result = await placeOrder(selectedAddress, paymentMethod);
+
+    if (!result.success) {
+      toast.error(result.message);
+      return;
+    }
+
+    if (result.redirectToPayment && result.checkoutUrl) {
+      window.location.href = result.checkoutUrl;
+      return;
+    }
+
+    toast.success("Order placed successfully.");
+    router.push('/order-placed');
 
   }
 
   useEffect(() => {
-    fetchUserAddresses();
-  }, [])
+    if (!selectedAddress && userAddresses.length) {
+      setSelectedAddress(userAddresses[0]);
+    }
+  }, [userAddresses, selectedAddress])
 
   return (
     <div className="w-full md:w-96 bg-gray-500/5 p-5">
@@ -79,6 +96,26 @@ const OrderSummary = () => {
 
         <div>
           <label className="text-base font-medium uppercase text-gray-600 block mb-2">
+            Payment Method
+          </label>
+          <div className="grid grid-cols-2 gap-3 text-sm">
+            <button
+              onClick={() => setPaymentMethod('COD')}
+              className={`border px-3 py-2 text-left ${paymentMethod === 'COD' ? 'border-orange-600 bg-orange-50 text-orange-700' : 'border-gray-300 text-gray-700'}`}
+            >
+              Cash On Delivery
+            </button>
+            <button
+              onClick={() => setPaymentMethod('ONLINE')}
+              className={`border px-3 py-2 text-left ${paymentMethod === 'ONLINE' ? 'border-orange-600 bg-orange-50 text-orange-700' : 'border-gray-300 text-gray-700'}`}
+            >
+              Online Payment
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="text-base font-medium uppercase text-gray-600 block mb-2">
             Promo Code
           </label>
           <div className="flex flex-col items-start gap-3">
@@ -115,7 +152,7 @@ const OrderSummary = () => {
         </div>
       </div>
 
-      <button onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700">
+      <button disabled={addressesLoading} onClick={createOrder} className="w-full bg-orange-600 text-white py-3 mt-5 hover:bg-orange-700 disabled:opacity-60 disabled:cursor-not-allowed">
         Place Order
       </button>
     </div>
