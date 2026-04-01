@@ -91,7 +91,7 @@ const ContactUs = () => {
           <div className="border border-gray-200 rounded-xl p-6 bg-white space-y-3">
             <h2 className="text-xl font-medium text-gray-900">Support</h2>
             <p className="text-gray-600">Email: support@aqeelaservices.com</p>
-            <p className="text-gray-600">Phone: +92 300 0000000</p>
+            <p className="text-gray-600">Phone: </p>
             <p className="text-gray-600">Hours: Mon - Sat, 6:00 AM - 8:00 PM</p>
           </div>
 
