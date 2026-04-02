@@ -61,6 +61,28 @@ Run the Neon migration once after setting env vars:
 npm run db:migrate
 ```
 
+## Resend + Neon Auth Setup
+
+This project uses email-code authentication with:
+
+- Neon PostgreSQL for users, login codes, and sessions
+- Resend for sending one-time verification codes
+
+Required environment variables:
+
+```env
+DATABASE_URL=postgresql://USER:PASSWORD@HOST/DB?sslmode=require
+RESEND_API_KEY=re_xxx
+RESEND_FROM_EMAIL="Aqeela Services <no-reply@yourdomain.com>"
+SELLER_USER_ID=usr_xxx
+```
+
+Notes:
+
+- `RESEND_FROM_EMAIL` must be a verified sender/domain in Resend.
+- Sign-in and sign-up now happen through `/sign-in` and `/sign-up` using email verification codes.
+- If you use seller-only UI routes, set `SELLER_USER_ID` to the user id that should be treated as seller.
+
 ## Stripe Online Payment Setup
 
 Add these variables in your `.env.local` file:
