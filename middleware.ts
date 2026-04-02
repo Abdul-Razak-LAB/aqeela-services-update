@@ -5,7 +5,9 @@ const isProtectedRoute = createRouteMatcher([
   '/my-orders(.*)',
   '/add-address(.*)',
   '/seller(.*)',
-  '/api/(.*)',
+  '/api/addresses(.*)',
+  '/api/orders(.*)',
+  '/api/payments/stripe/create-session(.*)',
 ])
 
 const clerkHandler = clerkMiddleware(async (auth, req) => {
