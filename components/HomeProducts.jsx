@@ -20,7 +20,7 @@ const HomeProducts = () => {
       {normalizedQuery && (
         <p className="text-sm text-gray-500 text-left w-full mt-2">Search results for "{searchQuery}"</p>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 flex-col items-center gap-6 mt-6 pb-14 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6 pb-14 w-full">
         {filteredProducts.map((product, index) => <ProductCard key={index} product={product} />)}
       </div>
       {filteredProducts.length === 0 && (

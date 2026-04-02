@@ -67,7 +67,7 @@ const ContactUs = () => {
   return (
     <>
       <Navbar />
-      <main className="px-6 md:px-16 lg:px-32 py-12 min-h-[70vh]">
+      <main className="site-container py-12 min-h-[70vh]">
         <section className="max-w-3xl space-y-4">
           <p className="text-sm uppercase tracking-[0.2em] text-green-700">Contact Us</p>
           <h1 className="text-3xl md:text-5xl font-medium text-gray-900">We are here to help</h1>

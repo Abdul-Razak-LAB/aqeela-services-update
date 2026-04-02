@@ -9,7 +9,7 @@ const AboutUs = () => {
   return (
     <>
       <Navbar />
-      <main className="px-6 md:px-16 lg:px-32 py-12 min-h-[70vh]">
+      <main className="site-container py-12 min-h-[70vh]">
         <section className="max-w-4xl space-y-6">
           <p className="text-sm uppercase tracking-[0.2em] text-green-700">About Us</p>
           <h1 className="text-3xl md:text-5xl font-medium leading-tight text-gray-900">

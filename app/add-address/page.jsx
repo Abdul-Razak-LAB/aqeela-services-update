@@ -65,7 +65,7 @@ const AddAddress = () => {
     return (
         <>
             <Navbar />
-            <div className="px-6 md:px-16 lg:px-32 py-16 flex flex-col md:flex-row justify-between">
+            <div className="site-container py-16 flex flex-col md:flex-row justify-between gap-8">
                 <form onSubmit={onSubmitHandler} className="w-full">
                     <p className="text-2xl md:text-3xl text-gray-500">
                         Add Shipping <span className="font-semibold text-orange-600">Address</span>
@@ -100,7 +100,7 @@ const AddAddress = () => {
                             onChange={(e) => setAddress({ ...address, area: e.target.value })}
                             value={address.area}
                         ></textarea>
-                        <div className="flex space-x-3">
+                        <div className="flex flex-col sm:flex-row gap-3">
                             <input
                                 className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500"
                                 type="text"

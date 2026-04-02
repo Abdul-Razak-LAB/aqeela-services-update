@@ -23,7 +23,7 @@ const Orders = () => {
     }, []);
 
     return (
-        <div className="flex-1 h-screen overflow-scroll flex flex-col justify-between text-sm">
+        <div className="flex-1 min-h-screen overflow-x-hidden overflow-y-auto flex flex-col justify-between text-sm">
             {loading ? <Loading /> : <div className="md:p-10 p-4 space-y-5">
                 <h2 className="text-lg font-medium">Orders</h2>
                 <div className="max-w-4xl rounded-md">

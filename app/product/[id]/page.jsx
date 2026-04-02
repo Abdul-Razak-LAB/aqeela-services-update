@@ -30,7 +30,7 @@ const Product = () => {
 
     return productData ? (<>
         <Navbar />
-        <div className="px-6 md:px-16 lg:px-32 pt-14 space-y-10">
+        <div className="site-container pt-14 space-y-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <div className="px-5 lg:px-16 xl:px-20">
                     <div className="rounded-lg overflow-hidden bg-gray-500/10 mb-4">
@@ -127,7 +127,7 @@ const Product = () => {
                     <p className="text-3xl font-medium">Featured <span className="font-medium text-orange-600">Products</span></p>
                     <div className="w-28 h-0.5 bg-orange-600 mt-2"></div>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6 pb-14 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6 pb-14 w-full">
                     {products.slice(0, 5).map((product, index) => <ProductCard key={index} product={product} />)}
                 </div>
                 <button className="px-8 py-2 mb-16 border rounded text-gray-500/70 hover:bg-slate-50/90 transition">
