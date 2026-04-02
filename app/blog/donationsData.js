@@ -42,6 +42,7 @@ export const youthMentorshipPrograms = [
     venue: "Neighborhood ICT Lab",
     focus: "Internet safety, productivity tools, and communication skills",
     impact: "30 youths completed the practical mentorship activity",
+    image: "/donations/digital-skills-mentorship.jpg",
   },
   {
     id: "ym-2026-01-18",
