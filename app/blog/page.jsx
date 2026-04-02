@@ -56,6 +56,15 @@ const Blog = () => {
           <div className="grid md:grid-cols-3 gap-5 mt-6">
             {youthMentorshipPrograms.map((program) => (
               <article key={program.id} className="border border-blue-100 rounded-xl p-5 bg-blue-50/40 space-y-3">
+                {program.image && (
+                  <Image
+                    src={program.image}
+                    alt={program.title}
+                    className="w-full h-44 object-cover rounded-lg"
+                    width={600}
+                    height={300}
+                  />
+                )}
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-xs uppercase tracking-[0.15em] text-blue-700">Mentorship</span>
                   <span className="text-xs text-gray-500">{program.date}</span>

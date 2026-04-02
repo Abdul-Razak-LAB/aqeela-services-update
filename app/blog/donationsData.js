@@ -33,6 +33,7 @@ export const youthMentorshipPrograms = [
     venue: "Community Hall",
     focus: "Goal setting, CV basics, and interview confidence",
     impact: "45 youths attended and received one-on-one guidance",
+    image: "/donations/career-guidance-session.jpg",
   },
   {
     id: "ym-2026-02-02",
@@ -49,6 +50,7 @@ export const youthMentorshipPrograms = [
     venue: "Youth Center",
     focus: "Discipline, community leadership, and teamwork",
     impact: "3 youth-led volunteer groups were formed",
+    image: "/donations/leadership-values-workshop.jpg",
   },
 ];
 
