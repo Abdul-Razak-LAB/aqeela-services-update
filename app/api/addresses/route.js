@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
 import connectDB from "@/config/db";
 import { mapAddressRow } from "@/lib/dbMappers";
+import { getAuthUserId } from "@/lib/auth";
 
 export async function GET() {
   try {
-    const { userId } = await auth();
+    const userId = await getAuthUserId();
 
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
@@ -33,7 +33,7 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const { userId } = await auth();
+    const userId = await getAuthUserId();
 
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });

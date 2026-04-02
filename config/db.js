@@ -104,6 +104,36 @@ export async function ensureNeonSchema() {
                 CREATE INDEX IF NOT EXISTS orders_payment_session_id_idx
                 ON orders (payment_session_id)
             `;
+
+            await sql`
+                CREATE TABLE IF NOT EXISTS auth_login_codes (
+                    id BIGSERIAL PRIMARY KEY,
+                    email TEXT NOT NULL,
+                    code_hash TEXT NOT NULL,
+                    expires_at TIMESTAMPTZ NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                )
+            `;
+
+            await sql`
+                CREATE INDEX IF NOT EXISTS auth_login_codes_email_idx
+                ON auth_login_codes (email)
+            `;
+
+            await sql`
+                CREATE TABLE IF NOT EXISTS auth_sessions (
+                    id BIGSERIAL PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    token_hash TEXT NOT NULL UNIQUE,
+                    expires_at TIMESTAMPTZ NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+                )
+            `;
+
+            await sql`
+                CREATE INDEX IF NOT EXISTS auth_sessions_user_id_idx
+                ON auth_sessions (user_id)
+            `;
         })();
     }
 

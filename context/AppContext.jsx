@@ -2,7 +2,6 @@
 import { productsDummyData, userDummyData } from "@/assets/assets";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 
 const CART_STORAGE_KEY = "aqeela_cart_items";
 
@@ -16,9 +15,8 @@ export const AppContextProvider = (props) => {
 
     const currency = process.env.NEXT_PUBLIC_CURRENCY
     const router = useRouter()
-    const { user, isLoaded } = useUser()
-
-    // const { user } = useUser()
+    const [user, setUser] = useState(null)
+    const [authLoaded, setAuthLoaded] = useState(false)
 
     const [products, setProducts] = useState([])
     const [searchQuery, setSearchQuery] = useState("")
@@ -32,6 +30,18 @@ export const AppContextProvider = (props) => {
 
     const fetchProductData = async () => {
         setProducts(productsDummyData)
+    }
+
+    const fetchAuthUser = async () => {
+        try {
+            const response = await fetch('/api/auth/me')
+            const data = await response.json()
+            if (response.ok && data.success) {
+                setUser(data.user)
+            }
+        } finally {
+            setAuthLoaded(true)
+        }
     }
 
     const fetchUserData = async () => {
@@ -87,8 +97,16 @@ export const AppContextProvider = (props) => {
         }
     }
 
+    const signOut = async () => {
+        await fetch('/api/auth/sign-out', { method: 'POST' })
+        setUser(null)
+        setUserAddresses([])
+        setOrders([])
+        router.push('/sign-in')
+    }
+
     const addUserAddress = async (address) => {
-        if (!isLoaded) {
+        if (!authLoaded) {
             return { success: false, message: "Please wait. Checking your sign-in status..." }
         }
 
@@ -234,6 +252,10 @@ export const AppContextProvider = (props) => {
     }, [])
 
     useEffect(() => {
+        fetchAuthUser()
+    }, [])
+
+    useEffect(() => {
         if (typeof window === "undefined") return;
 
         try {
@@ -264,7 +286,9 @@ export const AppContextProvider = (props) => {
         products, fetchProductData,
         cartItems, setCartItems,
         user,
-        authLoaded: isLoaded,
+        authLoaded,
+        fetchAuthUser,
+        signOut,
         userAddresses, addUserAddress, addressesLoading,
         orders, ordersLoading,
         fetchUserOrders,

@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
 import connectDB from "@/config/db";
 import { mapOrderRow } from "@/lib/dbMappers";
 import Stripe from "stripe";
+import { getAuthUserId } from "@/lib/auth";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
@@ -15,7 +15,7 @@ export async function POST(request) {
       );
     }
 
-    const { userId } = await auth();
+    const userId = await getAuthUserId();
     if (!userId) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
     }

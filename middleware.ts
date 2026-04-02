@@ -1,28 +1,29 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-const isProtectedRoute = createRouteMatcher([
-  '/my-orders(.*)',
-  '/add-address(.*)',
-  '/seller(.*)',
-  '/api/addresses(.*)',
-  '/api/orders(.*)',
-  '/api/payments/stripe/create-session(.*)',
-])
+const AUTH_SESSION_COOKIE = 'aqeela_session'
 
-const clerkHandler = clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) {
-    await auth.protect()
-  }
-})
+const protectedPagePrefixes = ['/my-orders', '/add-address', '/seller']
+const protectedApiPrefixes = ['/api/addresses', '/api/orders', '/api/payments/stripe/create-session']
 
-export default async function middleware(request: Request, event: unknown) {
-  try {
-    return await clerkHandler(request as never, event as never)
-  } catch (error) {
-    console.error('Middleware fallback due to Clerk invocation failure:', error)
+export default function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+  const hasSession = Boolean(request.cookies.get(AUTH_SESSION_COOKIE)?.value)
+
+  const isProtectedPage = protectedPagePrefixes.some((prefix) => pathname.startsWith(prefix))
+  const isProtectedApi = protectedApiPrefixes.some((prefix) => pathname.startsWith(prefix))
+
+  if (hasSession || (!isProtectedPage && !isProtectedApi)) {
     return NextResponse.next()
   }
+
+  if (isProtectedApi) {
+    return NextResponse.json({ success: false, message: 'Unauthorized' }, { status: 401 })
+  }
+
+  const signInUrl = new URL('/sign-in', request.url)
+  signInUrl.searchParams.set('redirect_url', pathname)
+  return NextResponse.redirect(signInUrl)
 }
 
 export const config = {

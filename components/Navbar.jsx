@@ -1,14 +1,13 @@
 "use client"
 import React from "react";
-import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon} from "@/assets/assets";
+import { assets } from "@/assets/assets";
 import Link from "next/link"
 import { useAppContext } from "@/context/AppContext";
 import Image from "next/image";
-import { UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
 
-  const { router, user, searchQuery, setSearchQuery } = useAppContext();
+  const { router, user, searchQuery, setSearchQuery, signOut } = useAppContext();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -59,20 +58,15 @@ const Navbar = () => {
             className="w-36 lg:w-44 text-sm outline-none bg-transparent"
           />
         </form>
-        { 
-          user 
-            ? <>
-            <UserButton>
-              <UserButton.MenuItems>
-                <UserButton.Action label="Cart" labelIcon={<CartIcon />} onClick={()=> router.push("/cart")} />
-              </UserButton.MenuItems>
-               <UserButton.MenuItems>
-                <UserButton.Action label="My Orders" labelIcon={<BagIcon />} onClick={()=> router.push("/my-orders")} />
-              </UserButton.MenuItems>
-            </UserButton>
-            </> 
-            : null
-        }
+        {user ? (
+          <>
+            <button onClick={() => router.push('/cart')} className="text-sm hover:text-gray-900">Cart</button>
+            <button onClick={() => router.push('/my-orders')} className="text-sm hover:text-gray-900">My Orders</button>
+            <button onClick={signOut} className="text-sm text-orange-600 hover:text-orange-700">Sign Out</button>
+          </>
+        ) : (
+          <button onClick={() => router.push('/sign-in')} className="text-sm text-orange-600 hover:text-orange-700">Sign In</button>
+        )}
       </ul>
 
       <div className="lg:hidden flex flex-col items-end gap-2 text-sm">
@@ -80,27 +74,11 @@ const Navbar = () => {
           <button onClick={() => router.push('/all-products')} aria-label="Search products">
             <Image className="w-4 h-4" src={assets.search_icon} alt="search icon" />
           </button>
-          {
-            user
-              ? <>
-                <UserButton>
-
-                  <UserButton.MenuItems>
-                    <UserButton.Action label="Home" labelIcon={<HomeIcon />} onClick={() => router.push("/")} />
-                  </UserButton.MenuItems>
-
-                  <UserButton.MenuItems>
-                    <UserButton.Action label="Products" labelIcon={<BoxIcon />} onClick={() => router.push("/all-products")} />
-                  </UserButton.MenuItems>
-
-                  <UserButton.MenuItems>
-                    <UserButton.Action label="My Orders" labelIcon={<BagIcon />} onClick={() => router.push("/my-orders")} />
-                  </UserButton.MenuItems>
-
-                </UserButton>
-              </>
-              : null
-          }
+          {user ? (
+            <button onClick={signOut} className="text-xs text-orange-600">Sign Out</button>
+          ) : (
+            <button onClick={() => router.push('/sign-in')} className="text-xs text-orange-600">Sign In</button>
+          )}
         </div>
 
         <div className="flex flex-wrap justify-end gap-x-3 gap-y-1 max-w-[260px] text-xs">

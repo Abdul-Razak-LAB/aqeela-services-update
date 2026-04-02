@@ -10,7 +10,6 @@
     "db:migrate": "node scripts/neon-migrate.cjs"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.32.2",
     "@neondatabase/serverless": "^1.0.2",
     "inngest": "^3.42.1",
     "next": "^15.5.14",
