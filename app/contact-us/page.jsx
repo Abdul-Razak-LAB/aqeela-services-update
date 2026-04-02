@@ -8,6 +8,12 @@ import { assets } from "@/assets/assets";
 
 const ContactUs = () => {
   const [loading, setLoading] = useState(false);
+  const [messageLoading, setMessageLoading] = useState(false);
+  const [contactMessage, setContactMessage] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -23,6 +29,40 @@ const ContactUs = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleMessageChange = (event) => {
+    const { name, value } = event.target;
+    setContactMessage((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleMessageSubmit = async (event) => {
+    event.preventDefault();
+    setMessageLoading(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(contactMessage)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        toast.error(data.message || 'Failed to send message.');
+        return;
+      }
+
+      toast.success('Message sent successfully.');
+      setContactMessage({ name: "", email: "", message: "" });
+    } catch (error) {
+      toast.error(error.message || 'Something went wrong.');
+    } finally {
+      setMessageLoading(false);
+    }
   };
 
   const handleConsultationSubmit = async (event) => {
@@ -95,13 +135,41 @@ const ContactUs = () => {
             <p className="text-gray-600">Hours: Mon - Sat, 6:00 AM - 8:00 PM</p>
           </div>
 
-          <form className="border border-gray-200 rounded-xl p-6 bg-white space-y-4">
+          <form onSubmit={handleMessageSubmit} className="border border-gray-200 rounded-xl p-6 bg-white space-y-4">
             <h2 className="text-xl font-medium text-gray-900">Send a message</h2>
-            <input type="text" placeholder="Your name" className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none" />
-            <input type="email" placeholder="Your email" className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none" />
-            <textarea rows={4} placeholder="Your message" className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none resize-none" />
-            <button type="button" className="bg-green-700 hover:bg-green-800 text-white px-5 py-2 rounded-lg transition">
-              Submit
+            <input
+              type="text"
+              name="name"
+              value={contactMessage.name}
+              onChange={handleMessageChange}
+              required
+              placeholder="Your name"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none"
+            />
+            <input
+              type="email"
+              name="email"
+              value={contactMessage.email}
+              onChange={handleMessageChange}
+              required
+              placeholder="Your email"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none"
+            />
+            <textarea
+              rows={4}
+              name="message"
+              value={contactMessage.message}
+              onChange={handleMessageChange}
+              required
+              placeholder="Your message"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 outline-none resize-none"
+            />
+            <button
+              type="submit"
+              disabled={messageLoading}
+              className="bg-green-700 hover:bg-green-800 disabled:opacity-70 text-white px-5 py-2 rounded-lg transition"
+            >
+              {messageLoading ? 'Sending...' : 'Submit'}
             </button>
           </form>
         </section>
