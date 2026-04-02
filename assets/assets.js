@@ -41,7 +41,7 @@ import k13 from "./k13.jpg";
 import k14 from "./k14.jpg";
 import k15 from "./k15.webp";
 import k16 from "./k16.jpg";
-import kk1 from "./KK1.jpg";
+import kk1 from "./kk1.jpg";
 import k17 from "./k17.jpg";
 import k18 from "./k18.webp";
 import k19 from "./k19.jpg";
