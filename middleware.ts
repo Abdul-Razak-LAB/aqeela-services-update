@@ -1,6 +1,27 @@
-import { clerkMiddleware } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
-export default clerkMiddleware()
+const isProtectedRoute = createRouteMatcher([
+  '/my-orders(.*)',
+  '/add-address(.*)',
+  '/seller(.*)',
+  '/api/(.*)',
+])
+
+const clerkHandler = clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) {
+    await auth.protect()
+  }
+})
+
+export default async function middleware(request: Request, event: unknown) {
+  try {
+    return await clerkHandler(request as never, event as never)
+  } catch (error) {
+    console.error('Middleware fallback due to Clerk invocation failure:', error)
+    return NextResponse.next()
+  }
+}
 
 export const config = {
   matcher: [
