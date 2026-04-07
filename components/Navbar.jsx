@@ -36,6 +36,9 @@ const Navbar = () => {
           <Link href="/about-us" className="hover:text-gray-900 transition whitespace-nowrap">
             About
           </Link>
+          <Link href="/blog" className="hover:text-gray-900 transition whitespace-nowrap">
+            Blog
+          </Link>
           <Link href="/contact-us" className="hover:text-gray-900 transition whitespace-nowrap">
             Contact
           </Link>
@@ -73,6 +76,9 @@ const Navbar = () => {
         </Link>
         <Link href="/about-us" className="hover:text-gray-900 transition whitespace-nowrap">
           About
+        </Link>
+        <Link href="/blog" className="hover:text-gray-900 transition whitespace-nowrap">
+          Blog
         </Link>
         <Link href="/contact-us" className="hover:text-gray-900 transition whitespace-nowrap">
           Contact

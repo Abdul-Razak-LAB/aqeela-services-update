@@ -55,3 +55,6 @@ export const youthMentorshipPrograms = [
   },
 ];
 
+export const donationInstructions =
+  "To add a new donation: 1) Put your photo in public/donations. 2) Add a new object to this file with date, location, items, and image path.";
+
