@@ -6,6 +6,11 @@ import { getAuthUserId } from "@/lib/auth";
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
+function getStripeCurrency() {
+  const rawCurrency = process.env.STRIPE_CURRENCY || "ghs";
+  return rawCurrency.trim().replace(/^['\"]|['\"]$/g, "").toLowerCase();
+}
+
 export async function POST(request) {
   try {
     if (!stripeSecretKey) {
@@ -55,7 +60,7 @@ export async function POST(request) {
 
     const lineItems = order.items.map((item) => ({
       price_data: {
-        currency: (process.env.STRIPE_CURRENCY || "usd").toLowerCase(),
+        currency: getStripeCurrency(),
         product_data: {
           name: item.product.name,
         },
@@ -66,7 +71,7 @@ export async function POST(request) {
 
     lineItems.push({
       price_data: {
-        currency: (process.env.STRIPE_CURRENCY || "usd").toLowerCase(),
+        currency: getStripeCurrency(),
         product_data: {
           name: "Tax",
         },
