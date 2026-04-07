@@ -20,7 +20,7 @@ const Blog = () => {
           <p className="text-gray-600 text-base md:text-lg">
             This page records each donation activity. Add your latest donation photos anytime and keep this story growing.
           </p>
-          <p className="text-sm text-gray-500">{donationInstructions}</p>
+          {/* <p className="text-sm text-gray-500">{donationInstructions}</p> */}
         </section>
 
         <section className="grid md:grid-cols-3 gap-5 mt-12">
