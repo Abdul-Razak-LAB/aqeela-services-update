@@ -34,7 +34,7 @@ const AllProducts = () => {
                 <div className="flex flex-col items-start gap-2">
                     <p className="text-sm max-sm:text-[11px] tracking-[0.2em] font-semibold text-amber-700 uppercase">Most requested picks</p>
                     <p className="text-[42px] leading-tight max-sm:text-[34px] font-semibold text-slate-700">Popular products</p>
-                    <p className="text-lg leading-7 max-sm:text-xs max-sm:leading-5 text-slate-600">Explore our best-selling doors and fittings trusted by homes and commercial spaces.</p>
+                    <p className="text-lg leading-7 max-sm:text-xs max-sm:leading-5 text-slate-600">Explore trusted agrochemical solutions from Aqeela Services, designed to protect crops and improve farm productivity.</p>
                 </div>
                 <div className="mt-5 flex flex-wrap items-center gap-2">
                     {categories.map((category) => {

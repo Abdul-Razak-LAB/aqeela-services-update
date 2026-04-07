@@ -227,7 +227,7 @@ export const productsDummyData = [
     "image": [
       k3
     ],
-    "category": "Ammonia",
+    "category": "Fertilizer",
     "date": 1738667366224,
     "__v": 0
   },
@@ -241,7 +241,7 @@ export const productsDummyData = [
     "image": [
       k4
     ],
-    "category": "Yara",
+    "category": "Fertilizer",
     "date": 1738667417511,
     "__v": 0
   },
@@ -346,7 +346,7 @@ export const productsDummyData = [
       
       k31
     ],
-    "category": "General item",
+    "category": "General items",
     "date": 1738667977644,
     "__v": 0
   },
@@ -391,7 +391,7 @@ export const productsDummyData = [
      
       k30
     ],
-    "category": "Seed",
+    "category": "Seeds",
     "date": 1738667977644,
     "__v": 0
   },
@@ -406,7 +406,7 @@ export const productsDummyData = [
     
       k32
     ],
-    "category": "Seed",
+    "category": "Seeds",
     "date": 1738667977644,
     "__v": 0
   },
@@ -421,7 +421,7 @@ export const productsDummyData = [
 
       k28
     ],
-    "category": "Seed",
+    "category": "Seeds",
     "date": 1738667977644,
     "__v": 0
   },
@@ -479,7 +479,7 @@ export const productsDummyData = [
     "image": [
       k26
     ],
-    "category": "liquid Fertilizer",
+    "category": "Liquid Fertilizer",
     "date": 1738668126660,
     "__v": 0
   },
@@ -674,7 +674,7 @@ export const productsDummyData = [
       
       k39
     ],
-    "category": "Seed",
+    "category": "Seeds",
     "date": 1738668126660,
     "__v": 0
   },
@@ -839,7 +839,7 @@ export const orderDummyData = [
             // "https://res.cloudinary.com/djbvf02yt/image/upload/v1738667237/h8cq4x9cfzqzwaiarvpk.png"
             k6
           ],
-          "category": "Seed",
+          "category": "Seeds",
           "date": 1738667236865,
           "__v": 0
         },

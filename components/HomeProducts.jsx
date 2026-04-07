@@ -29,7 +29,7 @@ const HomeProducts = () => {
     <div className="flex flex-col items-center pt-14 max-sm:pt-10">
       <p className="text-sm max-sm:text-[11px] tracking-[0.2em] font-semibold text-amber-700 uppercase text-left w-full">Most requested picks</p>
       <p className="text-[42px] leading-tight max-sm:text-[34px] font-semibold text-slate-700 text-left w-full mt-2">Popular products</p>
-      <p className="text-lg leading-7 max-sm:text-xs max-sm:leading-5 text-slate-600 text-left w-full mt-1">Explore our best-selling doors and fittings trusted by homes and commercial spaces.</p>
+      <p className="text-lg leading-7 max-sm:text-xs max-sm:leading-5 text-slate-600 text-left w-full mt-1">Explore trusted agrochemical solutions from Aqeela Services, designed to protect crops and improve farm productivity.</p>
       <div className="mt-5 mb-1 flex flex-wrap items-center gap-2 w-full">
         {categories.map((category) => {
           const isActive = selectedCategory === category;
