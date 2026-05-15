@@ -40,11 +40,6 @@ const OrderPlacedContent = () => {
 
     confirmPayment()
 
-    const timer = setTimeout(() => {
-      router.push('/my-orders')
-    }, 5000)
-
-    return () => clearTimeout(timer)
   }, [searchParams, router, setCartItems])
 
   return (
@@ -54,6 +49,20 @@ const OrderPlacedContent = () => {
         <div className="animate-spin rounded-full h-24 w-24 border-4 border-t-green-300 border-gray-200"></div>
       </div>
       <div className="text-center text-2xl font-semibold">Order Placed Successfully</div>
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => router.push('/all-products')}
+          className="px-6 py-2.5 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition"
+        >
+          Go to Shop
+        </button>
+        <button
+          onClick={() => router.push('/my-orders')}
+          className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition"
+        >
+          View My Orders
+        </button>
+      </div>
     </div>
   )
 }
@@ -68,6 +77,20 @@ const OrderPlaced = () => {
             <div className="animate-spin rounded-full h-24 w-24 border-4 border-t-green-300 border-gray-200"></div>
           </div>
           <div className="text-center text-2xl font-semibold">Processing your order...</div>
+          <div className="flex items-center gap-3">
+            <a
+              href="/all-products"
+              className="px-6 py-2.5 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition"
+            >
+              Go to Shop
+            </a>
+            <a
+              href="/my-orders"
+              className="px-6 py-2.5 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition"
+            >
+              View My Orders
+            </a>
+          </div>
         </div>
       }
     >

@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { useAppContext } from "@/context/AppContext";
 
 export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { fetchAuthUser } = useAppContext();
   const redirectUrl = searchParams.get("redirect_url") || "/";
 
   const [email, setEmail] = useState("");
@@ -57,6 +59,7 @@ export default function Page() {
         return;
       }
 
+      await fetchAuthUser();
       toast.success("Signed in successfully.");
       router.push(redirectUrl);
       router.refresh();
